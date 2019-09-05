@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!--  네임스페이스가 c(constructor)와 p(property)가 아닌 beans, context, jdbc, mybatis 일 때>
+	<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+	 id="dataSource">
+	 <property name="driverClassName" value="org.mariadb.jdbc.Driver" />
+	 <property name="url" value="jdbc:mariadb://127.0.0.1:3306/s_board" />
+	 <property name="username" value="ec" />
+	 <property name="password" value="1234" />
+	</bean>
+	
+	<bean id="sqlSessionFactory"
+	 class="org.mybatis.spring.SqlSessionFactoryBean">
+	 <property name="dataSource" ref="dataSource" />
+	 <property name="mapperLocations" value="classpath:mappers/sql/*.xml" />
+	</bean>
+	
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+	 <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
+	</bean>
+	-->
+	     
+	     <!-- 디비 연결 spring -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+	      p:driverClassName="org.mariadb.jdbc.Driver"
+	      p:url="jdbc:mysql://127.0.0.1:3306/s_board"
+	      p:username="ec"
+	      p:password="1234" />
+	      
+	      <!-- 풀 만들기 mybatis (둘 연결, 접속창고)-->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
+	      p:dataSource-ref="dataSource"
+	      p:mapperLocations="classpath:/sql/*.xml" />
+	      
+	      <!-- 세션 꺼내기 mybatis (창고서 객체 꺼내기)-->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
+	      c:sqlSessionFactory-ref="sqlSessionFactory" />
+</beans>
