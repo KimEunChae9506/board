@@ -7,7 +7,10 @@ public class BoardVO {
 	private String content;
 	private String writer;
 	private String regDate;
+	private String date;
 	private int viewCnt;
+	private String delYn;
+	
 	public int getNo() {
 		return no;
 	}
@@ -38,13 +41,24 @@ public class BoardVO {
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
 	public int getViewCnt() {
 		return viewCnt;
 	}
 	public void setViewCnt(int viewCnt) {
 		this.viewCnt = viewCnt;
 	}
-	
+	public String getDelYn() {
+		return delYn;
+	}
+	public void setDelYn(String delYn) {
+		this.delYn = delYn;
+	}
 	
 	
 }
