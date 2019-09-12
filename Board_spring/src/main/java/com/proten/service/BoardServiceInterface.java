@@ -3,6 +3,7 @@ package com.proten.service;
 import java.util.List;
 
 import com.proten.bean.BoardVO;
+import com.proten.bean.PageVO;
 
 public interface BoardServiceInterface {
 
@@ -14,7 +15,7 @@ public interface BoardServiceInterface {
 	
 	public void delete(int no);
 	
-	public List<BoardVO> selcet();
+	public List<BoardVO> list(PageVO pvo);
 	
 	public int count();
 }

@@ -3,6 +3,9 @@ package com.proten.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.junit.runner.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.proten.bean.BoardVO;
+import com.proten.bean.PageVO;
 import com.proten.service.BoardService;
 
 
@@ -25,9 +29,9 @@ public class BoardController {
 	private BoardService ser;
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)// 뷰 폴더 안 요청경로(path)
-	public void list(Model model) {
+	public void list(PageVO pvo, Model model) {
 		
-		List<BoardVO> list = ser.selcet();
+		List<BoardVO> list = ser.list(pvo);
 		model.addAttribute("list", list);//(넘기는 이름,넘길거), Model은 컨트롤러에서 처리한 결과를 화면에 전달하는 역할을 합니다. "Model은 컨트롤러(Controller)와 뷰(View)를 연결해주는 역할을 합니다
 		
 	}
@@ -51,7 +55,7 @@ public class BoardController {
 		BoardVO view = ser.view(no);
 		model.addAttribute("view",view);
 		return "board/view";
-		//no를 받는 방법은 여러가지. 우리는 리퀘파람으로(url파라미터) 받았고, 누구는 jsp에 히든으로 no 폼으로 전송
+		//no를 받는 방법은 여러가지. 우리는 리퀘파람으로(url파라미터) 받았고, 누구는 jsp에 히든으로 no 폼으로 (name=param) 전송
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
@@ -70,7 +74,7 @@ public class BoardController {
 		return "redirect:/board/view?no=" + vo.getNo();
 	}
 	
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	@RequestMapping(value = "/delete", method = RequestMethod.POST )
 	public String delete(@RequestParam("check") int no) {
 		
 		ser.delete(no);
@@ -79,11 +83,5 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
-	@RequestMapping(value = "/page", method = RequestMethod.GET)
-	public void page(Model model) {
-		int count = ser.count();
-		int postNum = 5;
-		int PageNum = (int)Math.ceil(count/postNum);
-		
-	}
+
 }

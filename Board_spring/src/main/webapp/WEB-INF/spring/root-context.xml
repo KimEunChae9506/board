@@ -32,12 +32,13 @@
 	      p:username="ec"
 	      p:password="1234" />
 	      
-	      <!-- 풀 만들기 mybatis (둘 연결, 접속창고)-->
+	      <!-- 풀 만들기 mybatis (둘 연결, 접속창고) / @autowired는 미리 등록한 빈(bean)을 스프링이 자동으로 연결해주는 어노테이션입니다 --> 
+		  <!-- 이 접속창고로 dao 내에서 sqlsession 쓸 수 있음 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
 	      p:dataSource-ref="dataSource"
 	      p:mapperLocations="classpath:/sql/*.xml" />
 	      
-	      <!-- 세션 꺼내기 mybatis (창고서 객체 꺼내기)-->
+	      <!-- 세션 꺼내기 mybatis (창고서 객체 꺼내기) 이 접속창고로 dao 내에서 sqlsession 쓸 수 있음 -->
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
 	      c:sqlSessionFactory-ref="sqlSessionFactory" />
 </beans>

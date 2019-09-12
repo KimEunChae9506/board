@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.proten.bean.BoardVO;
+import com.proten.bean.PageVO;
 import com.proten.dao.BoardDAO;
 
 @Service 
@@ -33,9 +34,9 @@ public class BoardService implements BoardServiceInterface {
 
 
 	@Override
-	public List<BoardVO> selcet() {
-		// TODO Auto-generated method stub
-		return dao.selcet();
+	public List<BoardVO> list(PageVO pvo) {
+
+		return dao.list(pvo);
 	}
 
 	@Override

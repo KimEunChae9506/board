@@ -1,7 +1,7 @@
 package com.proten.bean;
 
 public class BoardVO {
-
+		//여기선 인서트 같은 구문으로 다 변경될 수 있는 값이니 setter
 	private int no;
 	private String title;
 	private String content;
@@ -9,12 +9,11 @@ public class BoardVO {
 	private String regDate;
 	private String date;
 	private int viewCnt;
-	private String delYn;
 	
 	public int getNo() {
 		return no;
 	}
-	public void setNo(int no) {
+	public void setNo(int no) {//필드값변경
 		this.no = no;
 	}
 	public String getTitle() {
@@ -53,12 +52,7 @@ public class BoardVO {
 	public void setViewCnt(int viewCnt) {
 		this.viewCnt = viewCnt;
 	}
-	public String getDelYn() {
-		return delYn;
-	}
-	public void setDelYn(String delYn) {
-		this.delYn = delYn;
-	}
+	
 	
 	
 }
