@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	<mapper namespace="mapper">
 	
-	<!-- #{}는 vo에 있는 변수이름 -->
+	<!-- #{}는  vo에 있는 변수이름 -->
 	<select id="select" resultType="com.proten.bean.BoardVO">
 		select no, title, content, writer, regDate, DATE_FORMAT(regDate, '%Y-%m-%d') as 'date', viewCnt
 		 from ec_board  where delYn = 'N' order BY no DESC limit 0,10
