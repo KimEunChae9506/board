@@ -51,7 +51,7 @@ width:50%;
 <body>
 
 <div class="form-group container2">
-<form name = "form" action = "./insert2" method="post">
+<form name = "form" action = "./insert" method="post">
         <div class="form-group">
               <label for="exampleFormControlInput1">제목</label>
             <input type="text" class="form-control" id="title" name = "title" placeholder="제목을 작성해주세요.">

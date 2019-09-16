@@ -4,12 +4,25 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	<mapper namespace="mapper">
 	
-	<!-- #{}는  vo에 있는 변수이름, vo로 보낼 파라미터 -->
+	<!-- #{}는  vo에 있는 변수이름으로, vo로 보낼 파라미터 -->
 	<select id="list" parameterType="com.proten.bean.PageVO" resultType="com.proten.bean.BoardVO">
 		select no, title, content, writer, regDate, DATE_FORMAT(regDate, '%Y-%m-%d') as 'date', viewCnt
 		 from ec_board  where delYn = 'N' 
 		 order BY no DESC limit #{rowStart},#{perPageNum}
 	</select>
+	
+	<select id="search" parameterType="com.proten.bean.SearchBean" resultType="com.proten.bean.BoardVO">
+		select no, title, content, writer, regDate, DATE_FORMAT(regDate, '%Y-%m-%d') as 'date', viewCnt
+		 from ec_board  where delYn = 'N' 
+		 order BY <include refid="order"></include> DESC limit #{rowStart},#{perPageNum}
+	</select>
+	
+	<sql id = "order">
+		<if test = "orderBy !=null">
+			<if test = "orderBy =='t'.toString()">binary(title)</if>
+			<if test = "orderBy =='d'.toString()">no</if>
+		</if>
+	</sql>
 	
 	<select id="view" parameterType="int" resultType="com.proten.bean.BoardVO">
 		select *
@@ -18,6 +31,7 @@
 	<select id = "count" resultType = "int">
 		SELECT COUNT(no) FROM ec_board WHERE delYn = 'N'
 	</select>
+	
 	<insert id="insert" parameterType="com.proten.bean.BoardVO">
 		insert into ec_board (title, content, writer) 
 		values(#{title}, #{content}, #{writer});

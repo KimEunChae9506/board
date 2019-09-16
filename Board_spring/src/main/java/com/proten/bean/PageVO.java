@@ -2,19 +2,16 @@ package com.proten.bean;
 
 public class PageVO {
 
-	private int page;
-	private int rowStart;
-	private int perPageNum;
+	private int page = 1;
+	private int perPageNum = 5;
 	
-	public PageVO() {
-		this.page = 1;
-		this.perPageNum = 10;
-	}
-	
+
 	
 	public int getRowStart() {
-		return (page - 1) * perPageNum;
+		return (this.page - 1) * perPageNum;
 	}
+	
+	
 	
 	public int getPage() {
 		return page;
@@ -33,6 +30,8 @@ public class PageVO {
 	public void setPerPageNum(int perPageNum) {
 		this.perPageNum = perPageNum;
 	}
+
+	
 	
 	
 }

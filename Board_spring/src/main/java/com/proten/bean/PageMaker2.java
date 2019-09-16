@@ -1,6 +1,6 @@
 package com.proten.bean;
 
-public class PageMaker {
+public class PageMaker2 {
 	private PageVO pvo;
     private int totalCount;
     private int startPage;
@@ -8,7 +8,10 @@ public class PageMaker {
     private boolean prev;
     private boolean next;
     private int perPageBt = 5; //한 화면에 보여질 페이지 버튼 수
-  
+    
+    
+    
+    
     
 	public PageVO getPvo() {
 		return pvo;
@@ -22,34 +25,32 @@ public class PageMaker {
 	}
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;
-		calcPage();
+		totalPage();
 	}
 	
-	public void calcPage() {
-		int totalPage = (int) (Math.ceil(totalCount /(double) pvo.getPerPageNum()));
-    	endPage = (int) (Math.ceil(pvo.getPage() / (double) perPageBt) * perPageBt);
-    	
-    	startPage = (endPage - perPageBt) + 1;
-    	
-    	if(endPage > totalPage) {
-    		endPage = totalPage;
-    	}
-    	//맞아떨어질땐, 그게 아니면 
-    	
-    	
-    	if(startPage <= 0) {
-    		startPage = 1;
-    	}
-    	
+	public int totalPage() {
+    	int totalPage = (int) (Math.ceil(totalCount /(double) pvo.getPerPageNum()));
+
+    	return totalPage;
     }
 	
 	public int getStartPage() {
+		startPage = endPage - (perPageBt + 1);
+    	
+    	if(startPage < 0) {
+    		startPage = 1;
+    	}
 		return startPage;
 	}
 	public void setStartPage(int startPage) {
 		this.startPage = startPage;
 	}
 	public int getEndPage() {
+		endPage = (int) (Math.ceil(pvo.getPage() / (double) perPageBt) * perPageBt);
+    	
+    	if(endPage > totalPage()) {
+    		endPage = totalPage();
+    	}
 		return endPage;
 	}
 	public void setEndPage(int endPage) {
@@ -61,11 +62,11 @@ public class PageMaker {
 	public void setPrev(boolean prev) {
 		this.prev = prev;
 	}
-	public boolean isNext() {//둘이 같거나 크면 마지막페이지블록 마지막페이지인 것
-		return endPage * pvo.getPerPageNum() < getTotalCount();
+	public boolean isNext() {
+		return getEndPage() < totalPage();
 	}
 	public void setNext(boolean next) {
 		this.next = next;
 	}
-	
+
 }

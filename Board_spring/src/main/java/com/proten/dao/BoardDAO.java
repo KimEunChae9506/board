@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.proten.bean.BoardVO;
 import com.proten.bean.PageVO;
+import com.proten.bean.SearchBean;
 
 @Repository //현재 이 클래스가 DAO라는것을 스프링에게 알려주는 역할을 하는 어노테이션
 public class BoardDAO implements BoardDAOInterface {
@@ -34,7 +35,7 @@ public class BoardDAO implements BoardDAOInterface {
 	@Override
 	public List<BoardVO> list(PageVO pvo) {
 		
-		return sql.selectList("mapper.list");
+		return sql.selectList("mapper.list", pvo);
 	}
 
 	@Override
@@ -52,8 +53,12 @@ public class BoardDAO implements BoardDAOInterface {
 
 	@Override
 	public int count() {
-		
 		return sql.selectOne("mapper.count");
+	}
+
+	@Override
+	public List<BoardVO> listSearch(SearchBean sb) {
+		return sql.selectList("mapper.search", sb);
 	}
 
 }

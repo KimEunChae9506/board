@@ -11,6 +11,7 @@
 	
 	</style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://kit.fontawesome.com/8a7fdcda3d.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <script type = "text/javascript">
@@ -25,6 +26,10 @@
 		})
 		$("#delete").click(function(){
 			$("#edit").attr("action","./delete").submit();		
+		})
+		$("#sel").click(function(){
+			//location.href="./listSearch";
+			$("#edit").attr("action","./list").submit();	
 		})
 		
 		$("input:checkbox").click(function(){
@@ -56,8 +61,25 @@
 <div class="container">
 	<h1 class="text-center">은채 게시판</h1>
 	<form id="edit" name=writeform method=post action="">
-	  <div class="form-group row" style="align:right">
-	    
+	  <div class="form-group row">
+	  <div class="col-xs-2">
+	<select name = "select" class="form-control" id="exampleFormControlSelect1">
+	<option value = "">게시글수</option>
+	<option value = 5>5개씩</option>
+	<option value = 10>10개씩</option>
+	<option value = 15>15개씩</option>
+	</select>
+	</div>
+	<div class="col-xs-2">
+	<select name = "order" class="form-control" id="exampleFormControlSelect1">
+	<option value = "">---</option>
+	<option value = 't'>제목순</option>
+	<option value = 'd'>등록순</option>
+	</select>
+	</div>
+	<div class="col-xs-1">
+	    	<button type="button" class="btn btn-primary" id="sel">입력</button>
+	    </div>
 	    <div class="col-xs-1">
 	    	<button type="button" class="btn btn-primary" id="add">추가</button>
 	    </div>
@@ -71,6 +93,8 @@
 	
 </div>
 <div class="container">
+	
+
 	<table class="table table-striped">
 	  <thead>
 		<tr class="th">
@@ -97,6 +121,26 @@
 	    </tbody>
 	    </form>
 	</table>
+
+<ul class="btn-group pagination" style="float:right">
+    <c:if test="${pm.prev}">
+    <li>
+        <a href='<c:url value="/board/list?page=${pm.startPage-1 }"/>'><i class="fa fa-chevron-left"></i></a>
+    </li>
+    </c:if>
+    <c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="num">
+    <li>
+        <a href='<c:url value="/board/list?page=${num}"/>'><i class="fa">${num}</i></a>
+    </li>
+    </c:forEach>
+    <c:if test="${pm.next}">
+    <li>
+        <a href='<c:url value="/board/list?page=${pm.endPage+1 }"/>'><i class="fa fa-chevron-right"></i></a>
+    </li>
+    </c:if>
+</ul>
+
+
 
 </div>
 </body>

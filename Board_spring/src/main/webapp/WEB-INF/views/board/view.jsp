@@ -30,7 +30,7 @@ margin-top:100px;
 					$("#edit").attr("action","./delete").submit();
 					break;
 				case 2:
-					location.href="./list";
+					location.href="./list?page=${pvo.page}";
 					break;
 				 default:
 					alert("오류가 발생 하였습니다.");

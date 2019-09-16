@@ -1,47 +1,95 @@
 package com.proten.controller;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.junit.runner.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.proten.bean.BoardVO;
+import com.proten.bean.PageMaker;
+import com.proten.bean.PageMaker2;
 import com.proten.bean.PageVO;
+import com.proten.bean.SearchBean;
 import com.proten.service.BoardService;
 
 
 
 @Controller
-@RequestMapping("/board")// 요청경로(path)
+@RequestMapping("/board")// 요청경로(path) url
 public class BoardController {
 	
 	@Autowired
-	private BoardService ser;
+	private BoardService ser;//PageVO pvo, 
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)// 뷰 폴더 안 요청경로(path)
-	public void list(PageVO pvo, Model model) {
-		
+	public void getList(Model model, PageVO pvo) {
+	
 		List<BoardVO> list = ser.list(pvo);
-		model.addAttribute("list", list);//(넘기는 이름,넘길거), Model은 컨트롤러에서 처리한 결과를 화면에 전달하는 역할을 합니다. "Model은 컨트롤러(Controller)와 뷰(View)를 연결해주는 역할을 합니다
+		model.addAttribute("list", list);// Model은 컨트롤러에서 처리한 결과를 화면에 전달하는 역할을 합니다. "Model은 컨트롤러(Controller)와 뷰(View)를 연결해주는 역할을 합니다
 		
+		PageMaker pm = new PageMaker();
+		pm.setPvo(pvo);
+		pm.setTotalCount(ser.count());
+		model.addAttribute("pm", pm);
+	}
+	@RequestMapping(value = "/listSearch", method = RequestMethod.GET)// 뷰 폴더 안 요청경로(path)
+	public String getList(Model model, PageVO pvo,  SearchBean sb, @RequestParam("select") int selNo, @RequestParam("order") String order) {
+		sb.setPerPageNum(selNo);
+		sb.setOrderBy(order);
+		List<BoardVO> list = ser.list(sb);
+		model.addAttribute("list", list);// Model은 컨트롤러에서 처리한 결과를 화면에 전달하는 역할을 합니다. "Model은 컨트롤러(Controller)와 뷰(View)를 연결해주는 역할을 합니다
+		
+		PageMaker pm = new PageMaker();
+		pm.setPvo(sb);
+		pm.setTotalCount(ser.count());
+		model.addAttribute("pm", pm);
+		
+		return "redirect:/board/list?page=" + pvo.getPage() +
+				"&perPageNum=" + selNo + "&orderBy=" + order;
+	}
+	@RequestMapping(value = "/list", method = RequestMethod.POST)// 뷰 폴더 안 요청경로(path)
+	public String list(PageVO pvo, @RequestParam("select") int selNo, SearchBean sb, @RequestParam("order") String order) {
+		pvo.setPerPageNum(selNo);
+		ser.list(pvo);
+		
+		sb.setOrderBy(order);
+		ser.listSearch(sb);
+		
+		PageMaker pm = new PageMaker();
+		pm.setPvo(pvo);
+		System.out.println(selNo);
+		System.out.println(order);
+		return "redirect:/board/list?page=" + pvo.getPage() +
+				"&perPageNum=" + selNo + "&orderBy=" + order;
 	}
 	
+	@RequestMapping(value = "/listSearch", method = RequestMethod.POST)// 뷰 폴더 안 요청경로(path)
+	public String list(PageVO pvo, SearchBean sb, @RequestParam("order") String order) {
+
+		sb.setOrderBy(order);
+		ser.listSearch(sb);
+		PageMaker pm = new PageMaker();
+		pm.setPvo(pvo);
+		System.out.println(order);
+		return "redirect:/board/listSearch?page=" + pvo.getPage() +
+				"&perPageNum=" + pvo.getPerPageNum();
+	}
 	@RequestMapping(value = "/insert", method = RequestMethod.GET)
-	public void getinsert() {
-		//return "board/insert";
+	public String getinsert() {
+		return "board/insert";//뷰폴더 안에 board 폴더란 의미
 	}
 	
-	@RequestMapping(value = "/insert2", method = RequestMethod.POST)//뷰 안에 경로와 일치하기 때문에 form에 액션 안써줌
+	@RequestMapping(value = "/insert", method = RequestMethod.POST)//뷰 안에 경로와 일치하기 때문에 form에 액션 안써줌
 	public String insert(BoardVO vo) {
 
 		ser.insert(vo);
@@ -50,8 +98,10 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/view", method = RequestMethod.GET)//보이드 겟
-	public String view(@RequestParam("no") int no, Model model) {//@RequestParam 어노테이션을 사용하면 url로 온 매개변수 no 사용 가능
-
+	public String view(@RequestParam("no") int no, Model model, PageVO pvo) {//@RequestParam 어노테이션을 사용하면 url로 온 매개변수 no 사용 가능
+		
+		
+		model.addAttribute("pvo", pvo);
 		BoardVO view = ser.view(no);
 		model.addAttribute("view",view);
 		return "board/view";
@@ -60,7 +110,7 @@ public class BoardController {
 	
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public void getupdate(@RequestParam("no") int no, Model model) {//url 뒤 파라미터는 url경로로 안 쳐줌.
-
+		
 		BoardVO view = ser.view(no);
 		model.addAttribute("view",view);
 		
