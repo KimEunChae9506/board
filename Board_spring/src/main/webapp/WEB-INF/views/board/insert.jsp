@@ -5,15 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
-.container2{
-margin-left:25%;
-margin-top:200px;
-width:50%;
-}
 
-
-</style>
+<link rel="stylesheet" href="../resources/css/common.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -21,9 +14,9 @@ width:50%;
 
 	$(document).ready(function(){
 		$("#submit").click(function(){
-			var title = document.form.title.value;
-			var content = document.form.content.value;
-			var writer = document.form.writer.value;
+			var title = document.edit.title.value;
+			var content = document.edit.content.value;
+			var writer = document.edit.writer.value;
 			if(title == "" || writer == "" || content == ""){
 				alert("내용을 모두 입력하세요");
 				return;
@@ -51,7 +44,9 @@ width:50%;
 <body>
 
 <div class="form-group container2">
-<form name = "form" action = "./insert" method="post">
+<h3>게시판</h3>
+<hr width=60%; align="left"; style="border: solid 1px black;">
+<form name = "edit" action = "./insert" method="post">
         <div class="form-group">
               <label for="exampleFormControlInput1">제목</label>
             <input type="text" class="form-control" id="title" name = "title" placeholder="제목을 작성해주세요.">
@@ -64,8 +59,10 @@ width:50%;
             <label for="exampleFormControlTextarea1">내용</label>
             <textarea class="form-control" id="content" name = "content" rows="10"></textarea>
           </div>
+          <div class="right">
         <button type="button" id="submit" class="btn btn-info">등록하기</button>
         <button type="button" id="list" class="btn btn-secondary">목록으로</button>
+        </div>
     </form>
 </div>
 </body>

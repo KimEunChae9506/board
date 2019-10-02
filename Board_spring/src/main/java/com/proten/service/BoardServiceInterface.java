@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.proten.bean.BoardVO;
 import com.proten.bean.PageVO;
-import com.proten.bean.SearchBean;
 
 public interface BoardServiceInterface {
 
@@ -18,7 +17,8 @@ public interface BoardServiceInterface {
 	
 	public List<BoardVO> list(PageVO pvo);
 	
-	public int count();
+	public int count(PageVO pvo);
 	
-	public List<BoardVO> listSearch(SearchBean sb);
+
+	
 }

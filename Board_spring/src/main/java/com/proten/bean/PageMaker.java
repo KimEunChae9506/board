@@ -34,8 +34,6 @@ public class PageMaker {
     	if(endPage > totalPage) {
     		endPage = totalPage;
     	}
-    	//맞아떨어질땐, 그게 아니면 
-    	
     	
     	if(startPage <= 0) {
     		startPage = 1;
@@ -61,7 +59,7 @@ public class PageMaker {
 	public void setPrev(boolean prev) {
 		this.prev = prev;
 	}
-	public boolean isNext() {//둘이 같거나 크면 마지막페이지블록 마지막페이지인 것
+	public boolean isNext() {//곱의 값이 같으면 마지막페이지라 다음 버튼 x
 		return endPage * pvo.getPerPageNum() < getTotalCount();
 	}
 	public void setNext(boolean next) {

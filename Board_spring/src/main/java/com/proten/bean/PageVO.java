@@ -4,8 +4,8 @@ public class PageVO {
 
 	private int page = 1;
 	private int perPageNum = 5;
-	
-
+	private String orderBy = "d";
+	private String search = "";
 	
 	public int getRowStart() {
 		return (this.page - 1) * perPageNum;
@@ -31,7 +31,25 @@ public class PageVO {
 		this.perPageNum = perPageNum;
 	}
 
-	
+	public String getOrderBy() {
+		return orderBy;
+	}
+
+	public void setOrderBy(String orderBy) {
+		this.orderBy = orderBy;
+	}
+
+
+
+	public String getSearch() {
+		return search;
+	}
+
+
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
 	
 	
 }

@@ -1,7 +1,12 @@
 package com.proten.bean;
 
 public class BoardVO {
-		//여기선 인서트 같은 구문으로 다 변경될 수 있는 값이니 setter
+		@Override
+	public String toString() {
+		return "BoardVO [no=" + no + ", title=" + title + ", content=" + content + ", writer=" + writer + ", regDate="
+				+ regDate + ", date=" + date + ", viewCnt=" + viewCnt + "]";
+	}
+	//여기선 인서트 같은 구문으로 다 변경될 수 있는 값이니 setter
 	private int no;
 	private String title;
 	private String content;

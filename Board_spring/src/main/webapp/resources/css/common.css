@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+
+.container2{
+width:50%;
+margin-left:25%;
+margin-top:80px;
+}
+
+.right{
+	float:right;
+}
+
+.mar{
+	padding-right:30%;
+}
+
+.padd{
+	padding-top:15px;
+}
+
+.aa{
+	font-size:40px; 
+	margin-left:40%; 
+	margin-top:5%;
+}

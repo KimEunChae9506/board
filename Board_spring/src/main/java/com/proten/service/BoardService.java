@@ -1,12 +1,13 @@
 package com.proten.service;
 
+import java.util.HashMap;
 import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.proten.bean.BoardVO;
 import com.proten.bean.PageVO;
-import com.proten.bean.SearchBean;
 import com.proten.dao.BoardDAO;
 
 @Service 
@@ -27,6 +28,9 @@ public class BoardService implements BoardServiceInterface {
 
 	@Override
 	public void update(BoardVO vo) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("id", vo.toString());
+		System.out.println(map);
 		dao.update(vo);	
 	}
 
@@ -42,14 +46,13 @@ public class BoardService implements BoardServiceInterface {
 	}
 
 	@Override
-	public int count() {
-		return dao.count();
+	public int count(PageVO pvo) {
+		return dao.count(pvo);
 	}
 
-	@Override
-	public List<BoardVO> listSearch(SearchBean sb) {
-		
-		return dao.listSearch(sb);
-	}
+
+
+
+	
 
 }
